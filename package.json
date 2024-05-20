@@ -18,6 +18,7 @@
     "next-auth": "latest",
     "react": "latest",
     "react-dom": "latest",
+    "react-hot-toast": "latest",
     "tailwind-merge": "latest"
   },
   "devDependencies": {
