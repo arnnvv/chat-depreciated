@@ -9,8 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@hookform/resolvers": "latest",
     "@next-auth/upstash-redis-adapter": "latest",
     "@upstash/redis": "latest",
+    "axios": "latest",
     "class-variance-authority": "latest",
     "clsx": "latest",
     "lucide-react": "latest",
@@ -18,8 +20,11 @@
     "next-auth": "latest",
     "react": "latest",
     "react-dom": "latest",
-    "react-hot-toast": "latest",
-    "tailwind-merge": "latest"
+    "react-hook-form": "latest",
+    "react-loading-skeleton": "latest",
+    "sonner": "latest",
+    "tailwind-merge": "latest",
+    "zod": "latest"
   },
   "devDependencies": {
     "typescript": "^5",

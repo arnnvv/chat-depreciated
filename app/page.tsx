@@ -1,10 +1,17 @@
+"use client";
 import Button from "@/components/ui/Button";
-import { db } from "@/lib/db";
+import { toast } from "sonner";
 
 export default function Home() {
   return (
     <div>
-      <Button>Hello</Button>
+      <Button
+        onClick={() => {
+          toast.success(`CLicked`);
+        }}
+      >
+        Hello
+      </Button>
     </div>
   );
 }

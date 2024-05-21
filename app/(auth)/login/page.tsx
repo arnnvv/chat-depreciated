@@ -2,11 +2,9 @@
 import Button from "@/components/ui/Button";
 import { signIn } from "next-auth/react";
 import { FC, useState } from "react";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 
-interface pageProps {}
-
-const Page: FC<pageProps> = ({}) => {
+const Page: FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   return (
