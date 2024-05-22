@@ -1,10 +1,25 @@
-import { z } from "zod";
+import {
+  SafeParseReturnType,
+  ZodArray,
+  ZodNumber,
+  ZodObject,
+  ZodString,
+  z,
+} from "zod";
 
-export const friendRequestScheema = z.object({
+export const emailSchema: ZodObject<{
+  email: ZodString;
+}> = z.object({
   email: z.string().email(),
 });
 
-export const messageScheema = z.object({
+export const messageScheema: ZodObject<{
+  id: ZodString;
+  senderId: ZodString;
+  receiverId: ZodString;
+  text: ZodString;
+  timestamp: ZodNumber;
+}> = z.object({
   id: z.string(),
   senderId: z.string(),
   receiverId: z.string(),
@@ -12,25 +27,41 @@ export const messageScheema = z.object({
   timestamp: z.number(),
 });
 
-export const messagesScheema = z.array(messageScheema);
+export const messagesScheema: ZodArray<
+  ZodObject<{
+    id: ZodString;
+    senderId: ZodString;
+    receiverId: ZodString;
+    text: ZodString;
+    timestamp: ZodNumber;
+  }>
+> = z.array(messageScheema);
 
-export type FriendRequest = z.infer<typeof friendRequestScheema>;
+export type Email = z.infer<typeof emailSchema>;
 
 export type Message = z.infer<typeof messageScheema>;
 
 export type Messages = z.infer<typeof messagesScheema>;
 
-export const validateFriendRequest = (data: FriendRequest): boolean => {
-  const result = friendRequestScheema.safeParse(data);
+export const validateEmail: (data: Email) => boolean = (
+  data: Email,
+): boolean => {
+  const result: SafeParseReturnType<Email, Email> = emailSchema.safeParse(data);
   return result.success;
 };
 
-export const validateMessage = (data: Message): boolean => {
-  const result = messageScheema.safeParse(data);
+export const validateMessage: (data: Message) => boolean = (
+  data: Message,
+): boolean => {
+  const result: SafeParseReturnType<Message, Message> =
+    messageScheema.safeParse(data);
   return result.success;
 };
 
-export const validateMessages = (data: Messages): boolean => {
-  const result = messagesScheema.safeParse(data);
+export const validateMessages: (data: Messages) => boolean = (
+  data: Messages,
+): boolean => {
+  const result: SafeParseReturnType<Messages, Messages> =
+    messagesScheema.safeParse(data);
   return result.success;
 };
