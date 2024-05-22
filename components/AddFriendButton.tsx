@@ -21,28 +21,26 @@ const AddFriendButton: FC = () => {
     resolver: zodResolver(emailSchema),
   });
 
-  const addFriend: (data: Email) => Promise<void> = async (data: Email) => {
-    try {
-      if (!validateEmail(data)) {
-        toast.error("Enter valid email");
-        return;
-      }
-      await add(JSON.parse(JSON.stringify(data)) as Email);
-      setShowSuccessState(true);
-    } catch (e) {
-      if (e instanceof ZodError) {
-        setError(`email`, { message: `Invalid email${e.message}` });
-        toast.error("Invalid email");
-        return;
-      }
-      setError(`email`, { message: `Something went wrong ${e}` });
-    }
-  };
-
   return (
     <form
-      onSubmit={handleSubmit((data: Email) => {
-        addFriend(data);
+      action={add}
+      onSubmit={handleSubmit(async (data: Email) => {
+        try {
+          if (!validateEmail(data)) {
+            toast.error("Enter valid email");
+            return;
+          }
+          setShowSuccessState(true);
+        } catch (e) {
+          if (e instanceof ZodError) {
+            setError(`email`, { message: `Invalid email${e.message}` });
+            toast.error("Invalid email");
+            return;
+          }
+          setError(`email`, {
+            message: `Something went wrong in component ${e}`,
+          });
+        }
       })}
       className="max-w-sm"
     >
