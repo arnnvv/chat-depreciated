@@ -2,7 +2,7 @@ import { LucideProps, UserPlus } from "lucide-react";
 
 export const Icons = {
   Logo: (props: LucideProps) => (
-    <svg width="200" height="200" viewBox="-100 -100 200 200">
+    <svg width="50" height="50" viewBox="-100 -100 200 200">
       <defs>
         <path
           id="branch"
