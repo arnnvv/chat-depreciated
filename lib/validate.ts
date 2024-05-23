@@ -10,7 +10,11 @@ import {
 export const emailSchema: ZodObject<{
   email: ZodString;
 }> = z.object({
-  email: z.string().email(),
+  email: z
+    .string({
+      invalid_type_error: "invalid email",
+    })
+    .email(),
 });
 
 export const messageScheema: ZodObject<{
