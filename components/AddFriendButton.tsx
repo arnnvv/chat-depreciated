@@ -42,7 +42,6 @@ const AddFriendButton: FC = () => {
   };
   return (
     <form
-      action={add}
       onSubmit={handleSubmit(async (data: Email) => await addFriend(data))}
       className="max-w-sm"
     >
