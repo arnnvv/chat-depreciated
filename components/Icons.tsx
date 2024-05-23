@@ -15,7 +15,7 @@ export const Icons = {
         M 0 -60 L 20 -74
         M 0 -60 L -20 -74"
           stroke="#E5C39C"
-          stroke-width="5"
+          strokeWidth="5"
         />
       </defs>
 
