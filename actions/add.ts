@@ -17,30 +17,24 @@ const add = async (formData: Email) => {
       })
     ) {
       console.log("F**KED");
-      return new Response("Invalid email", {
-        status: 422,
-      });
+      throw new Error("Invalid email");
     }
 
     console.log("Not FUCKED");
     const session = await getServerSession(authOptions);
 
     if (!session) {
-      return new Response("Unauthorized", { status: 401 });
+      throw new Error("Unauthorized");
     }
 
     const idToAdd = await fetchRedis(`get`, `user:email:${email}`);
 
-    /*if (!idToAdd) {
-      return new Response("User does not exist", {
-        status: 401,
-      });
+    if (!idToAdd) {
+      throw new Error("User does not exist");
     }
 
     if (idToAdd === session.user.id) {
-      return new Response("Cannot add yourself", {
-        status: 400,
-      });
+      throw new Error("Cannot add yourself");
     }
 
     const alreadyAdded = (await fetchRedis(
@@ -50,9 +44,7 @@ const add = async (formData: Email) => {
     )) as 0 | 1;
 
     if (alreadyAdded) {
-      return new Response("Already added this user", {
-        status: 400,
-      });
+      throw new Error("Already added this user");
     }
 
     const alreadyFriend = (await fetchRedis(
@@ -62,18 +54,15 @@ const add = async (formData: Email) => {
     )) as 0 | 1;
 
     if (alreadyFriend) {
-      return new Response("Already friends with this user", {
-        status: 400,
-      });
+      throw new Error("Already friends with this user");
     }
 
     await db.sadd(`user:${idToAdd}:incoming_friend_requests`, session.user.id);
-    
-    return new Response("OK", {
-      status: 200,
-    });*/
+
     console.log("Done");
-    return;
+    return {
+      message: "Request sent",
+    };
   } catch (e) {
     if (e instanceof ZodError) {
       return new Response(`Invalid payload type ${e?.message}`, {
