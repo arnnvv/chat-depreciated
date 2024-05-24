@@ -7,9 +7,9 @@ import { Email, validateEmail } from "@/lib/validate";
 import { getServerSession } from "next-auth";
 import { ZodError } from "zod";
 
-const add = async (formData: FormData) => {
+const add = async (formData: Email) => {
   try {
-    const email = formData.get("email") as string;
+    const email = formData.email;
 
     if (
       !validateEmail({
@@ -31,7 +31,7 @@ const add = async (formData: FormData) => {
 
     const idToAdd = await fetchRedis(`get`, `user:email:${email}`);
 
-    if (!idToAdd) {
+    /*if (!idToAdd) {
       return new Response("User does not exist", {
         status: 401,
       });
@@ -68,10 +68,12 @@ const add = async (formData: FormData) => {
     }
 
     await db.sadd(`user:${idToAdd}:incoming_friend_requests`, session.user.id);
-
+    
     return new Response("OK", {
       status: 200,
-    });
+    });*/
+    console.log("Done");
+    return;
   } catch (e) {
     if (e instanceof ZodError) {
       return new Response(`Invalid payload type ${e?.message}`, {
