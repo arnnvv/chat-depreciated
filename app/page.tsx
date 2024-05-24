@@ -1,5 +1,6 @@
 "use client";
 import Button from "@/components/ui/Button";
+import { signOut } from "next-auth/react";
 import { toast } from "sonner";
 
 export default function Home() {
@@ -7,10 +8,11 @@ export default function Home() {
     <div>
       <Button
         onClick={() => {
-          toast.success(`CLicked`);
+          signOut();
+          toast.success("Signed out");
         }}
       >
-        Hello
+        Sign Out
       </Button>
     </div>
   );

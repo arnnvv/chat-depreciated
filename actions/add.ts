@@ -65,13 +65,9 @@ const add = async (formData: Email) => {
     };
   } catch (e) {
     if (e instanceof ZodError) {
-      return new Response(`Invalid payload type ${e?.message}`, {
-        status: 422,
-      });
+      throw new Error(`Invalid payload type ${e?.message}`);
     }
-    return new Response(`Something went wrong in action ${e}`, {
-      status: 500,
-    });
+    throw new Error(`Something went wrong in action ${e}`);
   }
 };
 
