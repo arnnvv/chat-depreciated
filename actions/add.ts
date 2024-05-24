@@ -7,9 +7,9 @@ import { Email, validateEmail } from "@/lib/validate";
 import { getServerSession } from "next-auth";
 import { ZodError } from "zod";
 
-const add = async (formData: Email) => {
+const add = async (formData: FormData) => {
   try {
-    const email = formData.email;
+    const email = formData.get("email") as string;
 
     if (
       !validateEmail({
