@@ -1,8 +1,16 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 
-interface FriendRequestsProps {}
+interface FriendRequestsProps {
+  IncommingFriendReqs: IncommingFriendReq[];
+  sessionId: string;
+}
 
-const FriendRequests: FC<FriendRequestsProps> = () => {
+const FriendRequests: FC<FriendRequestsProps> = ({
+  incommingFriendReqs,
+  sessionId,
+}) => {
+  const [incommingReqs, setIncommingReqs] =
+    useState<IncommingFriendReq[]>(incommingFriendReqs);
   return <div></div>;
 };
 
