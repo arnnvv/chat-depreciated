@@ -7,6 +7,7 @@ import { ReactNode } from "react";
 import { SidebarNavProps } from "@/types/sidebarNavProps";
 import Image from "next/image";
 import SignOutButton from "@/components/SignOutButton";
+import FriendReqSidebarOprion from "@/components/FriendReqSidebarOption";
 
 interface LayoutProps {
   children: ReactNode;
@@ -65,7 +66,12 @@ const Layout = async ({ children }: LayoutProps) => {
               </ul>
             </li>
 
-            <li></li>
+            <li>
+              <FriendReqSidebarOprion
+                sessioId=""
+                unsceenFriendReq={2}
+              ></FriendReqSidebarOprion>
+            </li>
 
             <li className="-mx-6 mt-auto flex flex-1 items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-gray-900">
               <div className="flex flex-1 items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-gray-900">
