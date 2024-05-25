@@ -26,6 +26,7 @@ const Layout = async ({ children }: LayoutProps) => {
   if (!session) {
     notFound();
   }
+
   return (
     <div className="w-full flex h-screen">
       <div className="flex h-full w-full max-w-xs grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6">
@@ -63,6 +64,8 @@ const Layout = async ({ children }: LayoutProps) => {
                 })}
               </ul>
             </li>
+
+            <li></li>
 
             <li className="-mx-6 mt-auto flex flex-1 items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-gray-900">
               <div className="flex flex-1 items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-gray-900">
