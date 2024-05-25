@@ -8,6 +8,7 @@ import { SidebarNavProps } from "@/types/sidebarNavProps";
 import Image from "next/image";
 import SignOutButton from "@/components/SignOutButton";
 import FriendReqSidebarOprion from "@/components/FriendReqSidebarOption";
+import fetchRedis from "@/helpers/redis";
 
 interface LayoutProps {
   children: ReactNode;
@@ -27,6 +28,13 @@ const Layout = async ({ children }: LayoutProps) => {
   if (!session) {
     notFound();
   }
+
+  const unsceenCount = (
+    (await fetchRedis(
+      `smembers`,
+      `user:${session.user.id}:incoming_friend_requests`,
+    )) as User[]
+  ).length;
 
   return (
     <div className="w-full flex h-screen">
@@ -68,8 +76,8 @@ const Layout = async ({ children }: LayoutProps) => {
 
             <li>
               <FriendReqSidebarOprion
-                sessioId=""
-                unsceenFriendReq={2}
+                sessioId={session.user.id}
+                unsceenFriendReq={unsceenCount}
               ></FriendReqSidebarOprion>
             </li>
 
