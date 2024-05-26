@@ -1,6 +1,9 @@
 "use client";
 import { Check, UserPlus, X } from "lucide-react";
 import { FC, useState } from "react";
+import accept from "@/actions/accept";
+import reject from "@/actions/reject";
+import { useRouter } from "next/navigation";
 
 interface FriendRequestsProps {
   incommingFriendReqs: IncommingFriendReq[];
@@ -11,8 +14,35 @@ const FriendRequests: FC<FriendRequestsProps> = ({
   incommingFriendReqs,
   sessionId,
 }) => {
+  const router = useRouter();
+
   const [incommingReqs, setIncommingReqs] =
     useState<IncommingFriendReq[]>(incommingFriendReqs);
+
+  const acceptReq = async (senderId: string) => {
+    await accept({
+      id: senderId,
+    });
+
+    setIncommingReqs((prev: IncommingFriendReq[]): IncommingFriendReq[] =>
+      prev.filter((req: IncommingFriendReq) => req.senderId !== senderId),
+    );
+
+    router.refresh();
+  };
+
+  const rejectReq = async (senderId: string) => {
+    await reject({
+      id: senderId,
+    });
+
+    setIncommingReqs((prev: IncommingFriendReq[]): IncommingFriendReq[] =>
+      prev.filter((req: IncommingFriendReq) => req.senderId !== senderId),
+    );
+
+    router.refresh();
+  };
+
   return (
     <>
       {incommingReqs.length === 0 ? (
@@ -23,6 +53,7 @@ const FriendRequests: FC<FriendRequestsProps> = ({
             <UserPlus className="text-black" />
             <p className="font-medium text-lg">{req.senderEmail}</p>
             <button
+              onClick={() => acceptReq(req.senderId)}
               aria-label="accept friend"
               className="w-8 h-8 bg-cyan-500 hover:bg-cyan-500 grid place-items-center rounded-full transition hover:shadow-md"
             >
@@ -30,6 +61,7 @@ const FriendRequests: FC<FriendRequestsProps> = ({
             </button>
 
             <button
+              onClick={() => rejectReq(req.senderId)}
               aria-label="deny friend"
               className="w-8 h-8 bg-red-600 hover:bg-red-700 grid place-items-center rounded-full transition hover:shadow-md"
             >
