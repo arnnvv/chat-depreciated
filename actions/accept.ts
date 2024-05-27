@@ -2,6 +2,7 @@
 
 import fetchRedis from "@/helpers/redis";
 import { authOptions } from "@/lib/auth";
+import { db } from "@/lib/db";
 import { getServerSession } from "next-auth";
 import { ZodError, object, string } from "zod";
 
@@ -32,6 +33,7 @@ const accept = async (sender: AcceptRejectProps) => {
 
     if (isAlreadyFriend) throw new Error("Already friends");
 
+    console.log(`Accepting friend request from ${session.user.id} to ${id}`);
     const hasFriendRequest = await fetchRedis(
       "sismember",
       `user:${session.user.id}:incoming_friend_requests`,
@@ -39,6 +41,16 @@ const accept = async (sender: AcceptRejectProps) => {
     );
 
     if (!hasFriendRequest) throw new Error("No friend request");
+
+    const transaction = db.multi();
+
+    transaction.sadd(`user:${session.user.id}:friends`, id);
+
+    transaction.sadd(`user:${id}:friends`, session.user.id);
+
+    transaction.srem(`user:${session.user.id}:incoming_friend_requests`, id);
+
+    await transaction.exec();
   } catch (e) {
     if (e instanceof ZodError) {
       throw new Error(`Invalid payload: ${e.issues[0].message}`);

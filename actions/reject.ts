@@ -20,6 +20,7 @@ const reject = async (sender: AcceptRejectProps) => {
     const sesssion = await getServerSession(authOptions);
 
     if (!sesssion) throw new Error("Unauthorized");
+    console.log(`Rejecting request from ${sesssion.user?.email}`);
   } catch (e) {
     if (e instanceof ZodError) {
       throw new Error(`Inavalid Payload: ${e.issues[0].message}`);
