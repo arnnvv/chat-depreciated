@@ -10,6 +10,7 @@ import SignOutButton from "@/components/SignOutButton";
 import FriendReqSidebarOprion from "@/components/FriendReqSidebarOption";
 import fetchRedis from "@/helpers/redis";
 import getFriends from "@/helpers/gerFriends";
+import SidebarChatList from "@/components/SidebarChatList";
 
 interface LayoutProps {
   children: ReactNode;
@@ -54,7 +55,7 @@ const Layout = async ({ children }: LayoutProps) => {
         <nav className="flex flex-1 flex-col">
           <ul role="list" className="flex flex-1 flex-col gap-y-7">
             <li>
-              <SidebarChatList />
+              <SidebarChatList sessionId={session.user.id} friends={friends} />
             </li>
 
             <li>
@@ -79,14 +80,13 @@ const Layout = async ({ children }: LayoutProps) => {
                     </li>
                   );
                 })}
+                <li>
+                  <FriendReqSidebarOprion
+                    sessioId={session.user.id}
+                    unsceenFriendReq={unsceenCount}
+                  ></FriendReqSidebarOprion>
+                </li>
               </ul>
-            </li>
-
-            <li>
-              <FriendReqSidebarOprion
-                sessioId={session.user.id}
-                unsceenFriendReq={unsceenCount}
-              ></FriendReqSidebarOprion>
             </li>
 
             <li className="-mx-6 mt-auto flex flex-1 items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-gray-900">
