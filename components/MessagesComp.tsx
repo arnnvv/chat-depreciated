@@ -2,6 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import { Messages, Message } from "@/lib/validate";
+import { format } from "date-fns";
 import { FC, MutableRefObject, useRef, useState } from "react";
 
 interface MessagesCompProps {
@@ -59,8 +60,8 @@ const MessagesComp: FC<MessagesCompProps> = ({
                   )}
                 >
                   {message.text}{" "}
-                  <span className="ml-2 text-xs text-gray-400">
-                    {formatTimestamp(message.timestamp)}
+                  <span className="ml-2 text-xs text-gray-50">
+                    {format(message.timestamp, "HH:mm")}
                   </span>
                 </span>
               </div>
