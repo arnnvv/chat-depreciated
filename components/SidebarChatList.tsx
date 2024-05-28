@@ -45,8 +45,14 @@ const SidebarChatList: FC<SidebarChatListProps> = ({
                 sessionId,
                 friend.id,
               )}`}
+              className="text-gray-700 hover:text-cyan-400 hover:bg-gray-50 group flex items-center gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
             >
-              hemlo
+              {friend.name}
+              {unseenMsgCount > 0 && (
+                <div className="border-r-cyan-400 font-medium text-white text-xs w-4 h-4 rounded-full flex justify-center items-center">
+                  {unseenMsgCount}
+                </div>
+              )}
             </a>
           </li>
         );
