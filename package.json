@@ -21,6 +21,7 @@
     "react-dom": "latest",
     "react-hook-form": "latest",
     "react-loading-skeleton": "latest",
+    "react-textarea-autosize": "latest",
     "sonner": "latest",
     "tailwind-merge": "latest",
     "zod": "latest"
