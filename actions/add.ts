@@ -1,8 +1,10 @@
 "use server";
 
+import { pusherServer } from "@/helpers/pusher";
 import fetchRedis from "@/helpers/redis";
 import { authOptions } from "@/lib/auth";
 import { db } from "@/lib/db";
+import { toPusherKey } from "@/lib/utils";
 import { Email, validateEmail } from "@/lib/validate";
 import { getServerSession } from "next-auth";
 import { ZodError } from "zod";
@@ -56,6 +58,15 @@ const add = async (formData: Email) => {
     if (alreadyFriend) {
       throw new Error("Already friends with this user");
     }
+
+    pusherServer.trigger(
+      toPusherKey(`user:${idToAdd}:incoming_friend_requests`),
+      "incoming_friend_request",
+      {
+        senderId: session.user.id,
+        senderEmail: session.user.email,
+      },
+    );
 
     await db.sadd(`user:${idToAdd}:incoming_friend_requests`, session.user.id);
 

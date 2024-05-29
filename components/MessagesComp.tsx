@@ -3,6 +3,7 @@
 import { cn } from "@/lib/utils";
 import { Messages, Message } from "@/lib/validate";
 import { format } from "date-fns";
+import Image from "next/image";
 import { FC, MutableRefObject, useRef, useState } from "react";
 
 interface MessagesCompProps {
@@ -64,6 +65,24 @@ const MessagesComp: FC<MessagesCompProps> = ({
                     {format(message.timestamp, "HH:mm")}
                   </span>
                 </span>
+              </div>
+
+              <div
+                className={cn("relative w-6 h-6", {
+                  "order-2": isCurrentUser,
+                  "order-1": !isCurrentUser,
+                  invisible: hasNxtMessage,
+                })}
+              >
+                <Image
+                  fill
+                  src={
+                    isCurrentUser ? (sessionImg as string) : chatPartner.image
+                  }
+                  alt="Profile picture"
+                  referrerPolicy="no-referrer"
+                  className="rounded-full"
+                />
               </div>
             </div>
           </div>

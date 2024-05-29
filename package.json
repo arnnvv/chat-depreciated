@@ -19,6 +19,8 @@
     "nanoid": "latest",
     "next": "latest",
     "next-auth": "latest",
+    "pusher": "latest",
+    "pusher-js": "latest",
     "react": "latest",
     "react-dom": "latest",
     "react-hook-form": "latest",
