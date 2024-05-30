@@ -47,18 +47,14 @@ const FriendRequests: FC<FriendRequestsProps> = ({
       console.log("New Friend Request");
     };
 
-    pusherClient.bind(`incoming_friend_request`, () =>
-      console.log("request received"),
-    );
+    pusherClient.bind(`incoming_friend_request`, friendReqhandler);
 
     return () => {
       pusherClient.unsubscribe(
         toPusherKey(`user:${sessionId}:incoming_friend_requests`),
       );
 
-      pusherClient.unbind(`incoming_friend_request`, () =>
-        console.log("Req Received"),
-      );
+      pusherClient.unbind(`incoming_friend_request`, friendReqhandler);
     };
   }, [sessionId]);
 
