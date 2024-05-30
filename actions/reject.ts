@@ -23,7 +23,6 @@ const reject = async (sender: AcceptRejectProps) => {
     if (!sesssion) throw new Error("Unauthorized");
 
     await db.srem(`user:${sesssion.user?.id}:incoming_friend_requests`, id);
-    console.log(`Rejecting request from ${sesssion.user?.email}`);
   } catch (e) {
     if (e instanceof ZodError) {
       throw new Error(`Inavalid Payload: ${e.issues[0].message}`);

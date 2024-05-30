@@ -18,11 +18,9 @@ const add = async (formData: Email) => {
         email,
       })
     ) {
-      console.log("F**KED");
       throw new Error("Invalid email");
     }
 
-    console.log("Not FUCKED");
     const session = await getServerSession(authOptions);
 
     if (!session) {
@@ -59,7 +57,6 @@ const add = async (formData: Email) => {
       throw new Error("Already friends with this user");
     }
 
-    console.log("Trigger Pushed");
     pusherServer.trigger(
       toPusherKey(`user:${idToAdd}:incoming_friend_request`),
       "incoming_friend_request",
@@ -71,7 +68,6 @@ const add = async (formData: Email) => {
 
     await db.sadd(`user:${idToAdd}:incoming_friend_requests`, session.user.id);
 
-    console.log("Done");
     return {
       message: "Request sent",
     };

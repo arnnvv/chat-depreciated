@@ -33,7 +33,6 @@ const accept = async (sender: AcceptRejectProps) => {
 
     if (isAlreadyFriend) throw new Error("Already friends");
 
-    console.log(`Accepting friend request from ${session.user.id} to ${id}`);
     const hasFriendRequest = await fetchRedis(
       "sismember",
       `user:${session.user.id}:incoming_friend_requests`,

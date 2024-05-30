@@ -80,9 +80,6 @@ const message: ({
       score: timestamp,
       member: JSON.stringify(messageData),
     });
-    console.log(
-      `Sent message: ${input} from ${sender.email} to ${receiver.email}`,
-    );
   } catch (e) {
     if (e instanceof Error) throw new Error(e.message);
     throw new Error(`Failed to send message via Action: ${e}`);
