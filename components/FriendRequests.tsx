@@ -1,12 +1,13 @@
 "use client";
+
 import { Check, UserPlus, X } from "lucide-react";
 import { FC, useEffect, useState } from "react";
 import accept from "@/actions/accept";
 import reject from "@/actions/reject";
 import { useRouter } from "next/navigation";
-import { pusherClient } from "@/helpers/pusher";
-import { toPusherKey } from "@/lib/utils";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import { pusherClient } from "@/lib/pusher";
+import { toPusherKey } from "@/lib/utils";
 
 interface FriendRequestsProps {
   incommingFriendReqs: IncommingFriendReq[];
@@ -22,33 +23,44 @@ const FriendRequests: FC<FriendRequestsProps> = ({
   const [incommingReqs, setIncommingReqs] =
     useState<IncommingFriendReq[]>(incommingFriendReqs);
 
-  const friendReqhandler: ({
-    senderId,
-    senderEmail,
-  }: IncommingFriendReq) => void = ({
-    senderId,
-    senderEmail,
-  }: IncommingFriendReq): void => {
-    setIncommingReqs((prev: IncommingFriendReq[]): IncommingFriendReq[] => [
-      ...prev,
-      { senderId, senderEmail },
-    ]);
-  };
-
   useEffect(() => {
     pusherClient.subscribe(
       toPusherKey(`user:${sessionId}:incoming_friend_requests`),
     );
 
-    pusherClient.bind("incoming_friend_requests", friendReqhandler);
+    console.log("listening to ", `user:${sessionId}:incoming_friend_requests`);
+
+    const friendReqhandler: ({
+      senderId,
+      senderEmail,
+    }: IncommingFriendReq) => void = ({
+      senderId,
+      senderEmail,
+    }: IncommingFriendReq): void => {
+      setIncommingReqs((prev: IncommingFriendReq[]): IncommingFriendReq[] => [
+        ...prev,
+        {
+          senderId,
+          senderEmail,
+        },
+      ]);
+      console.log("New Friend Request");
+    };
+
+    pusherClient.bind(`incoming_friend_request`, () =>
+      console.log("request received"),
+    );
 
     return () => {
       pusherClient.unsubscribe(
         toPusherKey(`user:${sessionId}:incoming_friend_requests`),
       );
-      pusherClient.unbind("incoming_friend_requests", friendReqhandler);
+
+      pusherClient.unbind(`incoming_friend_request`, () =>
+        console.log("Req Received"),
+      );
     };
-  }, []);
+  }, [sessionId]);
 
   const acceptReq = async (senderId: string) => {
     await accept({
