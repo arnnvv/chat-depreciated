@@ -70,6 +70,12 @@ const message: ({
       messageData,
     );
 
+    pusherServer.trigger(toPusherKey(`user:${friendId}:chats`), "new_message", {
+      ...messageData,
+      senderImg: sender.image,
+      senderName: sender.name,
+    });
+
     await db.zadd(`chat:${chatId}:messages`, {
       score: timestamp,
       member: JSON.stringify(messageData),

@@ -31,7 +31,10 @@ const ChatInput: FC<ChatInputProps> = ({
 
   const sendMessage: () => Promise<void> = async (): Promise<void> => {
     try {
-      if (!input) return;
+      if (!input) {
+        toast.error("Can't send empty message");
+        return;
+      }
       setIsLoading(true);
 
       await message({
