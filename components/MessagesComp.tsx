@@ -1,10 +1,11 @@
 "use client";
 
-import { cn } from "@/lib/utils";
+import { pusherClient } from "@/lib/pusher";
+import { cn, toPusherKey } from "@/lib/utils";
 import { Messages, Message } from "@/lib/validate";
 import { format } from "date-fns";
 import Image from "next/image";
-import { FC, MutableRefObject, useRef, useState } from "react";
+import { FC, MutableRefObject, useEffect, useRef, useState } from "react";
 
 interface MessagesCompProps {
   chatId: string;
@@ -24,6 +25,21 @@ const MessagesComp: FC<MessagesCompProps> = ({
   const scrollRef: MutableRefObject<HTMLDivElement | null> =
     useRef<HTMLDivElement | null>(null);
   const [messages, setMessages] = useState<Messages>(initialMessages);
+
+  useEffect(() => {
+    pusherClient.subscribe(toPusherKey(`chat:${chatId}`));
+
+    const msgHandHandler = (message: Message) => {
+      setMessages((prev: Messages): Messages => [message, ...prev]);
+    };
+
+    pusherClient.bind("incoming-message", msgHandHandler);
+
+    return () => {
+      pusherClient.unsubscribe(toPusherKey(`chat:${chatId}`));
+      pusherClient.unbind("incoming-message", msgHandHandler);
+    };
+  }, [chatId]);
 
   return (
     <div
