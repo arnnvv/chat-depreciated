@@ -15,7 +15,6 @@
     "class-variance-authority": "latest",
     "clsx": "latest",
     "date-fns": "latest",
-    "encoding": "^0.1.13",
     "lucide-react": "latest",
     "nanoid": "latest",
     "next": "latest",
@@ -27,6 +26,7 @@
     "react-hook-form": "latest",
     "react-loading-skeleton": "latest",
     "react-textarea-autosize": "latest",
+    "sharp": "latest",
     "sonner": "latest",
     "tailwind-merge": "latest",
     "zod": "latest"
