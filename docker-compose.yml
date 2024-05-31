@@ -3,7 +3,7 @@ version: 2.27.1
 services:
   next-app:
     container_name: next-app
-    environment:
+    env_file:
       - .env
     build:
       context: .
