@@ -25,7 +25,7 @@ const sidebarNav: SidebarNavProps[] = [
   },
 ];
 
-const Layout = async ({ children }: LayoutProps) => {
+const Layout = async ({ children }: LayoutProps): Promise<JSX.Element> => {
   const session = await getServerSession(authOptions);
   if (!session) {
     notFound();

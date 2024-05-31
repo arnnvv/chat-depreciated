@@ -5,9 +5,7 @@ import { getServerSession } from "next-auth";
 import { notFound } from "next/navigation";
 import { FC } from "react";
 
-interface RequestsProps {}
-
-const Requests: FC<RequestsProps> = async ({}) => {
+const Requests: FC = async (): Promise<JSX.Element> => {
   const session = await getServerSession(authOptions);
   if (!session) {
     notFound();
