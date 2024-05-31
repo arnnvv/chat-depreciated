@@ -1,13 +1,13 @@
-version: "3.9"
+version: 2.27.1
 
 services:
   next-app:
     container_name: next-app
+    environment:
+      - .env
     build:
       context: .
       dockerfile: ./Dockerfile
-    env_file:
-      - .env
     volumes:
       - .:/app/next-app:cached
     restart: always
